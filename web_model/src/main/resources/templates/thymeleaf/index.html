@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/static/test.js}"></script>
+</head>
+<body>
+<h1 th:text="${resource.name}"/>
+<input th:id="${resource.name}" th:name="${resource.name}" th:value="${resource.name}">
+<input th:value="${resource.birthday}">
+<input th:value="${#dates.format(resource.birthday,'yyyy/MM/dd hh:mm:ss')}">
+
+<div th:object="${resource}">
+    <input th:id="*{name}" th:name="*{name}" th:value="*{name}">
+    <input th:value="*{birthday}">
+    <input th:value="*{#dates.format(birthday,'yyyy/MM/dd hh:mm:ss')}">
+</div>
+
+<span th:text="${resource.password}"></span>
+<span th:utext="${resource.password}"></span>
+
+
+<form th:action="@{/adduser}" th:object="${resource}"  th:method="post">
+    <input type="text" th:field="*{name}">
+    <input type="submit">
+</form>
+
+<div th:if="${resource.age} == 18">18</div>
+<div th:if="${resource.age} gt 18">大于18</div>
+<div th:if="${resource.age} lt 18">小于18</div>
+<div th:if="${resource.age} ge 18">大于等于18</div>
+<div th:if="${resource.age} le 18">小于等于18</div>
+
+<select>
+    <option>请选择</option>
+    <option th:selected="${resource.age eq 18}">18</option>
+    <option th:selected="${resource.age eq 16}">16</option>
+    <option th:selected="${resource.age eq 15}">15</option>
+</select>
+
+<table border="1">
+    <tr>
+        <td>姓名</td>
+        <td>密码</td>
+        <td>语言</td>
+    </tr>
+    <tr th:each="user:${resources}">
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.language}"></td>
+    </tr>
+</table>
+
+<div th:switch="${resource.age}">
+    <div th:case="18">18</div>
+    <div th:case="15">15</div>
+    <div th:case="19">19</div>
+</div>
+</body>
+</html>
